@@ -25,6 +25,8 @@ Chinese Remark 中文备忘
 
 与Github上的1.1.4版相比，本固件只修改了 Configuration.h 和 Configuration_adv.h，以适应AK打印机。
 
+- 显示屏旁边的编码器旋钮，现在终于能正常工作而不是漏步丢步了。
+- 显示屏上的坐标不再乱码
 - 主板是原配的TriGorilla主板，接线不变
 - 固件支持热床，接法与原版一致，可参考Anycubic厂家网盘提供的资料。靠，那么便宜的机器，加个热床才50，你居然不加，什么心理？还想不想玩了？
 - XYZmax开关设为常闭开关（与原版一致），Zmin开关设置为常开开关（用作Z探头，请用户自己设计安装，不装也没所谓），XYmin开关不可用
@@ -32,6 +34,7 @@ Chinese Remark 中文备忘
 - 模型冷却风扇（出风口靠近挤出头的那个）依然接FAN0，用Gcode(M106 S255)可以开启
 - EEPROM读写功能(M500/M501/M502)开启，可以保存设置了
 - 机器尺寸等校准参数以前要在固件里调，现在可以用Gcode调，用M500保存。比如说G29 G33 M666等命令都可以用了。这些命令的具体用法见Marlin官网，如果官网对一条命令有记载，但机器对这条命令却没反应，说明这条命令没有启用/启用模式不正确，应该去固件里把相应的 #define 的注释给去掉，以达到期望的功能。
+- 开机显示Marlin LOGO和固件版本
 
 最后，祝大家身体健康。
 */
@@ -640,7 +643,7 @@ Chinese Remark 中文备忘
  *   M204 R    Retract Acceleration
  *   M204 T    Travel Acceleration
  */
-#define DEFAULT_ACCELERATION          3000    // X, Y, Z and E acceleration for printing moves
+#define DEFAULT_ACCELERATION          1000    // X, Y, Z and E acceleration for printing moves
 #define DEFAULT_RETRACT_ACCELERATION  3000    // E acceleration for retracts
 #define DEFAULT_TRAVEL_ACCELERATION   3000    // X, Y, Z acceleration for travel (non printing) moves
 
@@ -652,9 +655,9 @@ Chinese Remark 中文备忘
  * When changing speed and direction, if the difference is less than the
  * value set here, it may happen instantaneously.
  */
-#define DEFAULT_XJERK                 50.0
-#define DEFAULT_YJERK                 50.0
-#define DEFAULT_ZJERK                 50.0
+#define DEFAULT_XJERK                 20.0
+#define DEFAULT_YJERK                 20.0
+#define DEFAULT_ZJERK                 20.0
 #define DEFAULT_EJERK                  5.0
 
 
