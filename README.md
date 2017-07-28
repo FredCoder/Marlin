@@ -20,7 +20,7 @@ $ git checkout anycubic_kossel
 
 固件版本备忘：见 <https://github.com/ctmakro/Marlin/blob/anycubic_kossel/Marlin/Configuration.h> 头部
 
-固件使用方法：见 <https://ctmakro.github.io/site/art/anycubic_kossel.html>
+固件使用方法：见 <https://ctmakro.github.io/site/art/anycubic_kossel.html#firmware>
 
 # Marlin 3D Printer Firmware
 
