@@ -1,3 +1,26 @@
+# Marlin 1.1.4 Firmware for Anycubic Kossel
+
+# 适用于深圳 Anycubic Kossel 打印机的马林1.1.4版固件
+
+刷了这个固件，让你的打印机变成垃圾中的战斗机！
+
+## 安装使用
+
+修改好的固件在本repo的 "anycubic_kossel" branch下，此branch为默认branch，直接下载解压即可。或者使用下面的命令：
+
+```bash
+$ git clone https://github.com/ctmakro/Marlin
+$ cd Marlin
+$ git checkout anycubic_kossel
+```
+
+然后用Arduino烧写。
+
+## 相关资料
+
+固件版本备忘：见 <https://github.com/ctmakro/Marlin/blob/anycubic_kossel/Marlin/Configuration.h> 头部
+固件使用方法：见 <https://ctmakro.github.io/site/art/anycubic_kossel.html>
+
 # Marlin 3D Printer Firmware
 
 [![Build Status](https://travis-ci.org/MarlinFirmware/Marlin.svg?branch=RCBugFix)](https://travis-ci.org/MarlinFirmware/Marlin)
