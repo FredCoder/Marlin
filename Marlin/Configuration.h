@@ -25,6 +25,7 @@ Chinese Remark 中文备忘
 
 与Github上的1.1.4版相比，本固件只修改了 Configuration.h 和 Configuration_adv.h，以适应AK打印机。
 
+- 支持几十种新的Gcode命令，极大提高工作效率，具体请参考Marlin官网。
 - 显示屏旁边的编码器旋钮，现在终于能正常工作而不是漏步丢步了。
 - 显示屏上的坐标不再乱码
 - 主板是原配的TriGorilla主板，接线不变
