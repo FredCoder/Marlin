@@ -26,8 +26,9 @@ Chinese Remark 中文备忘
 与Github上的1.1.4版相比，本固件只修改了 Configuration.h 和 Configuration_adv.h，以适应AK打印机。
 
 - 支持几十种新的Gcode命令，极大提高工作效率，具体请参考Marlin官网。
-- 显示屏旁边的编码器旋钮，现在终于能正常工作而不是漏步丢步了。
+- 显示屏旁边的编码器旋钮方向正确且不再丢步。
 - 显示屏上的坐标不再乱码
+- 蜂鸣器频率改为2KHz，与蜂鸣器最佳频率一致。
 - 主板是原配的TriGorilla主板，接线不变
 - 固件支持热床，接法与原版一致，可参考Anycubic厂家网盘提供的资料。靠，那么便宜的机器，加个热床才50，你居然不加，什么心理？还想不想玩了？
 - XYZmax开关设为常闭开关（与原版一致），Zmin开关设置为常开开关（用作Z探头，请用户自己设计安装，不装也没所谓），XYmin开关不可用
@@ -1327,7 +1328,7 @@ Chinese Remark 中文备忘
  * you must uncomment the following option or it won't work.
  *
  */
-//#define SDSUPPORT
+#define SDSUPPORT
 
 /**
  * SD CARD: SPI SPEED
@@ -1344,7 +1345,7 @@ Chinese Remark 中文备忘
  *
  * Use CRC checks and retries on the SD communication.
  */
-//#define SD_CHECK_AND_RETRY
+#define SD_CHECK_AND_RETRY
 
 //
 // ENCODER SETTINGS
@@ -1375,7 +1376,7 @@ Chinese Remark 中文备忘
 //
 //  Set this option if CLOCKWISE causes values to DECREASE
 //
-//#define REVERSE_ENCODER_DIRECTION
+#define REVERSE_ENCODER_DIRECTION
 
 //
 // This option reverses the encoder direction for navigating LCD menus.
@@ -1407,8 +1408,8 @@ Chinese Remark 中文备忘
 // Note: Test audio output with the G-Code:
 //  M300 S<frequency Hz> P<duration ms>
 //
-//#define LCD_FEEDBACK_FREQUENCY_DURATION_MS 100
-//#define LCD_FEEDBACK_FREQUENCY_HZ 1000
+#define LCD_FEEDBACK_FREQUENCY_DURATION_MS 50
+#define LCD_FEEDBACK_FREQUENCY_HZ 2000
 
 //
 // CONTROLLER TYPE: Standard
