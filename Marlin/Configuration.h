@@ -1,5 +1,5 @@
 /**
-Marlin 1.1.4 tailored for Anycubic Kossel (K2) Printer
+Marlin 1.1.4 tailored for My Custom Bigprint Printer
 
 Qin Yongliang 20170728
 
@@ -9,35 +9,9 @@ ctmakro@gmail.com
 /**
 Chinese Remark 中文备忘
 
-这款固件是为深圳那个Anycubic Kossel（下称AK）打印机而调整的。源代码来自Marlin的Github上的bugfix-1.1.x分支，现在是1.1.4版。
+这款固件是为我的Bigprint打印机而调整的。源代码来自Marlin的Github上的bugfix-1.1.x分支，现在是1.1.4版。
 
-- 为什么要搞这款固件
-
-  因为厂家给的固件太落后（修改自Marlin 1.0），很多功能不支持，bug也比较多。如果更新一下固件就能解决这些问题，为什么不呢
-
-- 为什么厂家不更新一下固件呢
-
-  在中国人更新自己大脑的固件之前，有些问题就是想不通的。
-
-- 为什么要用你的固件，为什么我不能自己改
-
-  当然可以，原则上凡是持有《中华人民共和国DIY高级技师资格证》的人都可以改
-
-与Github上的1.1.4版相比，本固件只修改了 Configuration.h 和 Configuration_adv.h，以适应AK打印机。
-
-- 支持几十种新的Gcode命令，极大提高工作效率，具体请参考Marlin官网。
-- 显示屏旁边的编码器旋钮方向正确且不再丢步。
-- 显示屏上的坐标不再乱码
-- 蜂鸣器频率改为2KHz，与蜂鸣器最佳频率一致。
-- 主板是原配的TriGorilla主板，接线不变
-- 固件支持热床，接法与原版一致，可参考Anycubic厂家网盘提供的资料。靠，那么便宜的机器，加个热床才50，你居然不加，什么心理？还想不想玩了？
-- XYZmax开关设为常闭开关（与原版一致），Zmin开关设置为常开开关（用作Z探头，请用户自己设计安装，不装也没所谓），XYmin开关不可用
-- 挤出头冷却风扇（安装在挤出头上方的那个）依然接FAN2，在挤出头高于50度时会自动启动（而不是永远开启），无需Gcode干预
-- 模型冷却风扇（出风口靠近挤出头的那个）依然接FAN0，用Gcode(M106 P0 S255)开启
-- 主板上FAN1针脚启用，各位可以自己找个小风扇接上去，作为主板风扇，电机启动后会开始运转
-- EEPROM读写功能(M500/M501/M502)开启，可以保存设置了
-- 机器尺寸等校准参数以前要在固件里调，现在可以用Gcode调，用M500保存。比如说G29 G33 M666等命令都可以用了。这些命令的具体用法见Marlin官网，如果官网对一条命令有记载，但机器对这条命令却没反应，说明这条命令没有启用/启用模式不正确，应该去固件里把相应的 #define 的注释给去掉，以达到期望的功能。
-- 开机显示Marlin LOGO和固件版本
+与Github上的1.1.4版相比，本固件只修改了 Configuration.h 和 Configuration_adv.h，以适应Bigprint打印机。
 
 最后，祝大家身体健康。
 */
@@ -164,18 +138,18 @@ Chinese Remark 中文备忘
 // Please choose the name from boards.h that matches your setup
 #ifndef MOTHERBOARD
   //#define MOTHERBOARD BOARD_RAMPS_14_EFB
-  #define MOTHERBOARD BOARD_RAMPS_13_EFB
+  #define MOTHERBOARD BOARD_RAMPS_14_EFB
 
   //important: to enable fan2, you have to define FAN2_PIN, which is D44 on the Tri-Gorilla board.
-  #define FAN2_PIN 44
+  // #define FAN2_PIN 44
 
   // fan1 is D7 on the board.
-  #define FAN1_PIN 7
+  // #define FAN1_PIN 7
 #endif
 
 // Optional custom name for your RepStrap or other custom machine
 // Displayed in the LCD "Ready" message
-#define CUSTOM_MACHINE_NAME "AK"
+#define CUSTOM_MACHINE_NAME "Bigprint"
 
 // Define this to set a unique identifier for this printer, (Used by some programs to differentiate between machines)
 // You can use an online service to generate a random UUID. (eg http://www.uuidgenerator.net/version4)
@@ -334,7 +308,7 @@ Chinese Remark 中文备忘
  *
  * :{ '0': "Not used", '1':"100k / 4.7k - EPCOS", '2':"200k / 4.7k - ATC Semitec 204GT-2", '3':"Mendel-parts / 4.7k", '4':"10k !! do not use for a hotend. Bad resolution at high temp. !!", '5':"100K / 4.7k - ATC Semitec 104GT-2 (Used in ParCan & J-Head)", '6':"100k / 4.7k EPCOS - Not as accurate as Table 1", '7':"100k / 4.7k Honeywell 135-104LAG-J01", '8':"100k / 4.7k 0603 SMD Vishay NTCS0603E3104FXT", '9':"100k / 4.7k GE Sensing AL03006-58.2K-97-G1", '10':"100k / 4.7k RS 198-961", '11':"100k / 4.7k beta 3950 1%", '12':"100k / 4.7k 0603 SMD Vishay NTCS0603E3104FXT (calibrated for Makibox hot bed)", '13':"100k Hisens 3950  1% up to 300°C for hotend 'Simple ONE ' & hotend 'All In ONE'", '20':"PT100 (Ultimainboard V2.x)", '51':"100k / 1k - EPCOS", '52':"200k / 1k - ATC Semitec 204GT-2", '55':"100k / 1k - ATC Semitec 104GT-2 (Used in ParCan & J-Head)", '60':"100k Maker's Tool Works Kapton Bed Thermistor beta=3950", '66':"Dyze Design 4.7M High Temperature thermistor", '70':"the 100K thermistor found in the bq Hephestos 2", '71':"100k / 4.7k Honeywell 135-104LAF-J01", '147':"Pt100 / 4.7k", '1047':"Pt1000 / 4.7k", '110':"Pt100 / 1k (non-standard)", '1010':"Pt1000 / 1k (non standard)", '-3':"Thermocouple + MAX31855 (only for sensor 0)", '-2':"Thermocouple + MAX6675 (only for sensor 0)", '-1':"Thermocouple + AD595",'998':"Dummy 1", '999':"Dummy 2" }
  */
-#define TEMP_SENSOR_0 5
+#define TEMP_SENSOR_0 1
 #define TEMP_SENSOR_1 0
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_3 0
@@ -512,7 +486,7 @@ Chinese Remark 中文备忘
 //============================== Delta Settings =============================
 //===========================================================================
 // Enable DELTA kinematics and most of the default configuration for Deltas
-#define DELTA
+// #define DELTA
 
 #if ENABLED(DELTA)
 
@@ -580,11 +554,11 @@ Chinese Remark 中文备忘
 // Specify here all the endstop connectors that are connected to any endstop or probe.
 // Almost all printers will be using one per axis. Probes will use one or more of the
 // extra connectors. Leave undefined any used for non-endstop and non-probe purposes.
-//#define USE_XMIN_PLUG
-//#define USE_YMIN_PLUG
-#define USE_ZMIN_PLUG
-#define USE_XMAX_PLUG
-#define USE_YMAX_PLUG
+#define USE_XMIN_PLUG
+#define USE_YMIN_PLUG
+#define USE_ZMIN_PLUG // as probe.
+// #define USE_XMAX_PLUG
+// #define USE_YMAX_PLUG
 #define USE_ZMAX_PLUG
 
 // coarse Endstop Settings
@@ -602,12 +576,12 @@ Chinese Remark 中文备忘
 #endif
 
 // Mechanical endstop with COM to ground and NC to Signal uses "false" here (most common setup).
-#define X_MIN_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
-#define Y_MIN_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
+#define X_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop.
+#define Y_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop.
 #define Z_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop.
 #define X_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
 #define Y_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
-#define Z_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
+#define Z_MAX_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop.
 #define Z_MIN_PROBE_ENDSTOP_INVERTING true // set to true to invert the logic of the probe.
 
 // Enable this feature if all enabled endstop pins are interrupt-capable.
@@ -639,7 +613,13 @@ Chinese Remark 中文备忘
  * Override with M92
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   {80,80,80,96 }
+// screw: 3mm/r motor: 0.9deg/step 360/3/0.9 step/mm
+// microstepping 1/16
+#define bigprintxy (360.0/3.0/0.9*16)
+// screw: 8mm/r motor: 1.8deg/step 360/8/1.8 step/mm
+// microstepping 1/2
+#define bigprintz (360.0/8.0/1.8*2)
+#define DEFAULT_AXIS_STEPS_PER_UNIT   {bigprintxy,bigprintxy,bigprintz, 96}
 
 /**
  * Default Max Feed Rate (mm/s)
@@ -879,20 +859,20 @@ Chinese Remark 中文备忘
 
 // Direction of endstops when homing; 1=MAX, -1=MIN
 // :[-1,1]
-#define X_HOME_DIR 1
-#define Y_HOME_DIR 1
+#define X_HOME_DIR -1
+#define Y_HOME_DIR -1
 #define Z_HOME_DIR 1
 
 // @section machine
 
 // Travel limits after homing (units are in mm)
-#define X_MAX_POS DELTA_PRINTABLE_RADIUS
-#define X_MIN_POS -DELTA_PRINTABLE_RADIUS
-#define Y_MAX_POS DELTA_PRINTABLE_RADIUS
-#define Y_MIN_POS -DELTA_PRINTABLE_RADIUS
+#define X_MAX_POS 210
+#define X_MIN_POS 0
+#define Y_MAX_POS 210
+#define Y_MIN_POS 0
 
 #define Z_MIN_POS 0
-#define Z_MAX_POS 300
+#define Z_MAX_POS 500
 
 // If enabled, axes won't move below MIN_POS in response to movement commands.
 //#define MIN_SOFTWARE_ENDSTOPS
@@ -958,7 +938,7 @@ Chinese Remark 中文备忘
  *   With an LCD controller the process is guided step-by-step.
  */
 // #define AUTO_BED_LEVELING_3POINT
-#define AUTO_BED_LEVELING_LINEAR
+// #define AUTO_BED_LEVELING_LINEAR
 //#define AUTO_BED_LEVELING_BILINEAR
 //#define AUTO_BED_LEVELING_UBL
 //#define MESH_BED_LEVELING
@@ -1094,7 +1074,7 @@ Chinese Remark 中文备忘
 #define MANUAL_X_HOME_POS 0
 #define MANUAL_Y_HOME_POS 0
 //#define MANUAL_Z_HOME_POS 0
-#define MANUAL_Z_HOME_POS DELTA_HEIGHT // Distance between the nozzle to printbed after homing
+#define MANUAL_Z_HOME_POS 500 // Distance between the nozzle to printbed after homing
 
 // Use "Z Safe Homing" to avoid homing with a Z probe outside the bed area.
 //
@@ -1114,7 +1094,7 @@ Chinese Remark 中文备忘
 
 // Homing speeds (mm/m)
 #define HOMING_FEEDRATE_XY (50*60)
-#define HOMING_FEEDRATE_Z  (100*60)
+#define HOMING_FEEDRATE_Z  (50*60)
 
 //=============================================================================
 //============================= Additional Features ===========================
