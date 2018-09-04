@@ -614,11 +614,11 @@ Chinese Remark 中文备忘
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
 // screw: 3mm/r motor: 0.9deg/step 360/3/0.9 step/mm
-// microstepping 1/16
-#define bigprintxy (360.0/3.0/0.9*16)
-// screw: 8mm/r motor: 1.8deg/step 360/8/1.8 step/mm
 // microstepping 1/2
-#define bigprintz (360.0/8.0/1.8*2)
+#define bigprintxy (360.0/3.0/0.9*2)
+// screw: 8mm/r motor: 0.9deg/step 360/8/0.9 step/mm
+// microstepping 1/8
+#define bigprintz (360.0/8.0/0.9*8)
 #define DEFAULT_AXIS_STEPS_PER_UNIT   {bigprintxy,bigprintxy,bigprintz, 96}
 
 /**
@@ -1093,8 +1093,8 @@ Chinese Remark 中文备忘
 #endif
 
 // Homing speeds (mm/m)
-#define HOMING_FEEDRATE_XY (50*60)
-#define HOMING_FEEDRATE_Z  (50*60)
+#define HOMING_FEEDRATE_XY (25*60)
+#define HOMING_FEEDRATE_Z  (25*60)
 
 //=============================================================================
 //============================= Additional Features ===========================
