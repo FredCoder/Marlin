@@ -218,7 +218,8 @@
 #define E3_AUTO_FAN_PIN -1
 #define E4_AUTO_FAN_PIN -1
 #define EXTRUDER_AUTO_FAN_TEMPERATURE 120
-#define EXTRUDER_AUTO_FAN_SPEED   255  // full speed
+#define EXTRUDER_AUTO_FAN_SPEED   127  // half speed
+// bed heat up slow if fan full + high extruder temperature(insufficient power)
 
 /**
  * M355 Case Light on-off / brightness
