@@ -279,6 +279,10 @@
   #include "watchdog.h"
 #endif
 
+#if ENABLED(MAX7219_DEBUG)
+  #include "Max7219_Debug_LEDs.h"
+#endif
+
 #if ENABLED(NEOPIXEL_RGBW_LED)
   #include <Adafruit_NeoPixel.h>
 #endif
@@ -9241,7 +9245,10 @@ inline void gcode_M400() { stepper.synchronize(); }
   /**
    * M406: Turn off filament sensor for control
    */
-  inline void gcode_M406() { filament_sensor = false; }
+  inline void gcode_M406() {
+    filament_sensor = false;
+    calculate_volumetric_multipliers();   // Restore correct 'volumetric_multiplier' value
+  }
 
   /**
    * M407: Get measured filament diameter on serial output
@@ -10271,6 +10278,31 @@ inline void invalid_extruder_error(const uint8_t e) {
 
 #endif // PARKING_EXTRUDER
 
+#if HAS_FANMUX
+
+  void fanmux_switch(const uint8_t e) {
+    WRITE(FANMUX0_PIN, TEST(e, 0) ? HIGH : LOW);
+    #if PIN_EXISTS(FANMUX1)
+      WRITE(FANMUX1_PIN, TEST(e, 1) ? HIGH : LOW);
+      #if PIN_EXISTS(FANMUX2)
+        WRITE(FANMUX2, TEST(e, 2) ? HIGH : LOW);
+      #endif
+    #endif
+  }
+
+  FORCE_INLINE void fanmux_init(void){
+    SET_OUTPUT(FANMUX0_PIN);
+    #if PIN_EXISTS(FANMUX1)
+      SET_OUTPUT(FANMUX1_PIN);
+      #if PIN_EXISTS(FANMUX2)
+        SET_OUTPUT(FANMUX2_PIN);
+      #endif
+    #endif
+    fanmux_switch(0);
+  }
+
+#endif // HAS_FANMUX
+
 /**
  * Perform a tool-change, which may result in moving the
  * previous tool out of the way and the new tool into place.
@@ -10353,7 +10385,7 @@ void tool_change(const uint8_t tmp_extruder, const float fr_mm_s/*=0.0*/, bool n
           current_position[Y_AXIS] -= hotend_offset[Y_AXIS][active_extruder] - hotend_offset[Y_AXIS][tmp_extruder];
           current_position[Z_AXIS] -= hotend_offset[Z_AXIS][active_extruder] - hotend_offset[Z_AXIS][tmp_extruder];
 
-          // Activate the new extruder
+          // Activate the new extruder ahead of calling set_axis_is_at_home!
           active_extruder = tmp_extruder;
 
           // This function resets the max/min values - the current position may be overwritten below.
@@ -10687,14 +10719,19 @@ void tool_change(const uint8_t tmp_extruder, const float fr_mm_s/*=0.0*/, bool n
         select_multiplexed_stepper(tmp_extruder);
       #endif
 
+      // Set the new active extruder
+      active_extruder = tmp_extruder;
+
     #endif // HOTENDS <= 1
 
     #if ENABLED(SWITCHING_EXTRUDER) && !DONT_SWITCH
       stepper.synchronize();
-      move_extruder_servo(tmp_extruder);
+      move_extruder_servo(active_extruder);
     #endif
 
-    active_extruder = tmp_extruder;
+    #if HAS_FANMUX
+      fanmux_switch(active_extruder);
+    #endif
 
     SERIAL_ECHO_START();
     SERIAL_ECHOLNPAIR(MSG_ACTIVE_EXTRUDER, (int)active_extruder);
@@ -13168,6 +13205,10 @@ void idle(
     bool no_stepper_sleep/*=false*/
   #endif
 ) {
+  #if ENABLED(MAX7219_DEBUG)
+    Max7219_idle_tasks();
+  #endif  // MAX7219_DEBUG
+
   lcd_update();
 
   host_keepalive();
@@ -13283,6 +13324,10 @@ void stop() {
  */
 void setup() {
 
+  #if ENABLED(MAX7219_DEBUG)
+    Max7219_init();
+  #endif
+
   #ifdef DISABLE_JTAG
     // Disable JTAG on AT90USB chips to free up pins for IO
     MCUCR = 0x80;
@@ -13324,6 +13369,7 @@ void setup() {
     SERIAL_ECHOPGM(MSG_CONFIGURATION_VER);
     SERIAL_ECHOPGM(STRING_DISTRIBUTION_DATE);
     SERIAL_ECHOLNPGM(MSG_AUTHOR STRING_CONFIG_H_AUTHOR);
+    SERIAL_ECHO_START();
     SERIAL_ECHOLNPGM("Compiled: " __DATE__);
   #endif
 
@@ -13434,6 +13480,10 @@ void setup() {
     SET_OUTPUT(E_MUX2_PIN);
   #endif
 
+  #if HAS_FANMUX
+    fanmux_init();
+  #endif
+
   lcd_init();
 
   #ifndef CUSTOM_BOOTSCREEN_TIMEOUT
@@ -13491,12 +13541,12 @@ void setup() {
   #if ENABLED(SWITCHING_NOZZLE)
     move_nozzle_servo(0);  // Initialize nozzle servo
   #endif
-  
+
   #if ENABLED(PARKING_EXTRUDER)
     #if ENABLED(PARKING_EXTRUDER_SOLENOIDS_INVERT)
       pe_activate_magnet(0);
       pe_activate_magnet(1);
-    #else 
+    #else
       pe_deactivate_magnet(0);
       pe_deactivate_magnet(1);
     #endif
