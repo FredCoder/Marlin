@@ -3,7 +3,7 @@
 ```bash
 $ git clone https://github.com/ctmakro/Marlin
 $ cd Marlin
-$ git checkout anycubic_kossel
+$ git checkout anycubic_chiron
 ```
 
 compile and upload using Arduino IDE.
