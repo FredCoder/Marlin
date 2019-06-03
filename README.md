@@ -1,4 +1,4 @@
-# Marlin 1.1.5 Firmware for Anycubic Chiron
+# Marlin 1.1.9 Firmware for Anycubic Chiron
 
 ```bash
 $ git clone https://github.com/ctmakro/Marlin
