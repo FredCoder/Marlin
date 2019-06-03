@@ -11,12 +11,17 @@ compile and upload using Arduino IDE.
 comparing to factory firmware, this version includes:
 
 - very fast homing speeds
-- S-curve acceleration
-- working Linear Advance (google it)
+- S-curve acceleration (less vibration)
+- working Linear Advance (allow much faster print. google it)
 - antialiasing at low speeds
 - shorter waiting time for temperature
-- you can adjust M851 Z probe offset
+- you can adjust M851 Z probe offset from serial terminal
 - you can travel to negative Z coordinates (very handy for zeroing with paper and M206)
+- extruder cooling fan will turn on when hotter than 100 degC
+- model cooling fan works like a charm (unlike factory firmware where it doesn't work under manual leveling mode)
+- you can enable the bed leveling method of your choice in `Configuration.h`
+- yes the probe still works.
+- M500 should no longer block the machine.
 
 problems:
 
