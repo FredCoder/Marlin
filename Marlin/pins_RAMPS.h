@@ -73,10 +73,13 @@
 #ifndef X_MAX_PIN
   #define X_MAX_PIN         2
 #endif
-#define Y_MIN_PIN          14
-#define Y_MAX_PIN          15
+#define Y_MIN_PIN          42 // chiron specific
+// #define Y_MIN_PIN          14
+#define Y_MAX_PIN          -1 // chiron specific
+// #define Y_MAX_PIN          15
 #define Z_MIN_PIN          18
-#define Z_MAX_PIN          19
+// #define Z_MAX_PIN          19
+#define Z_MAX_PIN          43 // chiron specific
 
 //
 // Z Probe (when not Z_MIN_PIN)
@@ -192,7 +195,8 @@
 // Temperature Sensors
 //
 #define TEMP_0_PIN         13   // Analog Input
-#define TEMP_1_PIN         15   // Analog Input
+#define TEMP_1_PIN         -1   // chiron
+// #define TEMP_1_PIN         15   // Analog Input
 #define TEMP_BED_PIN       14   // Analog Input
 
 // SPI for Max6675 or Max31855 Thermocouple
@@ -226,7 +230,7 @@
   #define MOSFET_D_PIN     -1
 #endif
 #ifndef RAMPS_D8_PIN
-  #define RAMPS_D8_PIN      8
+  #define RAMPS_D8_PIN      45 // chiron specific
 #endif
 #ifndef RAMPS_D9_PIN
   #define RAMPS_D9_PIN      9

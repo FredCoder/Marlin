@@ -1,12 +1,4 @@
-# Marlin 1.1.4 Firmware for Anycubic Kossel
-
-# 适用于深圳 Anycubic Kossel 打印机的马林1.1.4版固件
-
-刷了这个固件，让你的打印机变成垃圾中的战斗机！
-
-## 安装使用
-
-修改好的固件在本repo的 "anycubic_kossel" branch下，此branch为默认branch，直接下载解压即可。或者使用下面的命令：
+# Marlin 1.1.5 Firmware for Anycubic Chiron
 
 ```bash
 $ git clone https://github.com/ctmakro/Marlin
@@ -14,13 +6,26 @@ $ cd Marlin
 $ git checkout anycubic_kossel
 ```
 
-然后用Arduino烧写。
+compile and upload using Arduino IDE.
 
-## 相关资料
+comparing to factory firmware, this version includes:
 
-固件版本备忘：见 <https://github.com/ctmakro/Marlin/blob/anycubic_kossel/Marlin/Configuration.h> 头部
+- very fast homing speeds
+- S-curve acceleration
+- working Linear Advance (google it)
+- antialiasing at low speeds
+- shorter waiting time for temperature
+- you can adjust M851 Z probe offset
+- you can travel to negative Z coordinates (very handy for zeroing with paper and M206)
 
-固件使用方法：见 <https://ctmakro.github.io/site/art/anycubic_kossel.html#firmware>
+problems:
+
+- LCD touchscreen won't work (since its firmware isn't open-source)
+- the LCD interface is hard to use anyway. Pronterface is your friend.
+- you will have to adjust maximum speed/acceleration/jerk by yourself.
+- you will have to tune Linear Advance factor yourself.
+- you will have to tune PID for hotend/bed for best performance
+- for tuning instructions please check marlin firmware manual.
 
 # Marlin 3D Printer Firmware
 <img align="right" src="../../raw/1.1.x/buildroot/share/pixmaps/logo/marlin-250.png" />
