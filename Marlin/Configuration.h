@@ -372,7 +372,7 @@
 #define PIDTEMP
 #define BANG_MAX 255     // Limits current to nozzle while in bang-bang mode; 255=full current
 #define PID_MAX BANG_MAX // Limits current to nozzle while PID is active (see PID_FUNCTIONAL_RANGE below); 255=full current
-#define PID_K1 0.9      // Smoothing factor within any PID loop
+#define PID_K1 0.96      // Smoothing factor within any PID loop
 #if ENABLED(PIDTEMP)
   #define PID_AUTOTUNE_MENU // Add PID Autotune to the LCD "Temperature" menu to run M303 and apply the result.
   //#define PID_DEBUG // Sends debug data to the serial port.
