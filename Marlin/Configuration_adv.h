@@ -385,7 +385,7 @@
 #define X_HOME_BUMP_MM 3
 #define Y_HOME_BUMP_MM 3
 #define Z_HOME_BUMP_MM 3
-#define HOMING_BUMP_DIVISOR { 16, 16, 16 }  // Re-Bump Speed Divisor (Divides the Homing Feedrate)
+#define HOMING_BUMP_DIVISOR { 32, 32, 32 }  // Re-Bump Speed Divisor (Divides the Homing Feedrate)
 #define QUICK_HOME                     // If homing includes X and Y, do a diagonal move initially
 
 // When G28 is called, this option will make Y home before X
