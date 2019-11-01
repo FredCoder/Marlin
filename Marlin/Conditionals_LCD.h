@@ -487,7 +487,7 @@
   #define BLTOUCH_5V_MODE     140
   #define BLTOUCH_OD_MODE     150
   #define BLTOUCH_RESET       160
-
+  
 /**
  * The following commands require different minimum delays.
  *
